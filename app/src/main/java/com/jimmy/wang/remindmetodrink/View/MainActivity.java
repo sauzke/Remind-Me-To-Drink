@@ -1,5 +1,6 @@
 package com.jimmy.wang.remindmetodrink.View;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -24,5 +25,15 @@ public class MainActivity extends AppCompatActivity implements View{
         timer.setText("");
 
         presenter = new MainPresenter(this);
+    }
+
+    public void calcClick(android.view.View view){
+        Intent intent = new Intent(this,CalculateActivity.class);
+        startActivity(intent);
+    }
+
+    public void settingClick(android.view.View view){
+        Intent intent = new Intent(this,SettingsActivity.class);
+        startActivity(intent);
     }
 }
