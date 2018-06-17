@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.324"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="todo" />
 
     <ImageButton
         android:id="@+id/settingButton"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.018"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="todo" />
 
     <TextView
         android:id="@+id/waterPercentage"
@@ -51,7 +51,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
-        android:text="@string/textview"
+        android:text="textview"
         app:layout_constraintEnd_toEndOf="@+id/waterLevelView"
         app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toStartOf="@+id/waterLevelView"
@@ -67,7 +67,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/textview"
+        android:text="textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/waterLevelView"
         app:layout_constraintHorizontal_bias="0.494"
@@ -85,7 +85,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:onClick="calcClick"
-        android:text="@string/button"
+        android:text="button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/waterLevelView"
         app:layout_constraintHorizontal_bias="0.489"
