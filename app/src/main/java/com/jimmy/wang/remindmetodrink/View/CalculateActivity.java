@@ -1,6 +1,8 @@
 package com.jimmy.wang.remindmetodrink.View;
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.jimmy.wang.remindmetodrink.Model.WaterModel;
 import com.jimmy.wang.remindmetodrink.Presenter.CalcPresenter;
 import com.jimmy.wang.remindmetodrink.R;
 
@@ -57,7 +60,7 @@ public class CalculateActivity extends AppCompatActivity implements com.jimmy.wa
     }
 
     public void showDialog(String message){
-        DialogFragment newFrag = AlertDialogFragment.newInstance(message);
+        DialogFragment newFrag = AlertDialogFragment.newInstance(message,this);
         newFrag.show(getFragmentManager(),"dialog");
     }
 
@@ -65,5 +68,18 @@ public class CalculateActivity extends AppCompatActivity implements com.jimmy.wa
         if(action == "showDialog"){
             showDialog(param);
         }
+        if(action == "goToMain"){
+            goToMain();
+        }
+    }
+
+    public void saveAmount(double amount){
+        WaterModel model = new WaterModel(this);
+        presenter.saveResult(amount,model);
+    }
+
+    public void goToMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }

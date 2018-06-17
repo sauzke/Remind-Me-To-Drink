@@ -2,12 +2,15 @@ package com.jimmy.wang.remindmetodrink.Presenter;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.jimmy.wang.remindmetodrink.Model.WaterAmount;
+import com.jimmy.wang.remindmetodrink.Model.WaterModel;
 import com.jimmy.wang.remindmetodrink.View.AlertDialogFragment;
 import com.jimmy.wang.remindmetodrink.View.CalculateActivity;
 import com.jimmy.wang.remindmetodrink.View.View;
@@ -61,8 +64,19 @@ public class CalcPresenter implements Presenter{
     }
 
     // Calls model to save result
-    public void saveResult(Double amount){
-        //Stores in model
+    public void saveResult(Double amount, WaterModel model){
+        if(model.selectAmount(1) == null) {
+            model.insertAmount(amount);
+            System.out.println("Inserted");
+        }
+        else{
+            WaterAmount wAmount = new WaterAmount(1,amount,"");
+            model.updateAmount(wAmount);
+            System.out.println("Updated");
+        }
+
+        System.out.println(model.selectAmount(1).getAmount());
+
         view.viewAction("goToMain","");
     }
 }

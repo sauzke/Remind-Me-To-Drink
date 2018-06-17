@@ -6,7 +6,7 @@ public class WaterAmount {
     public static final String COLUMN_AMOUNT = "amount";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
-    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS"+
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "+
             TABLE_NAME + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_AMOUNT + " DOUBLE,"

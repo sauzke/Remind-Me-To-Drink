@@ -7,17 +7,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.jimmy.wang.remindmetodrink.Model.WaterModel;
 import com.jimmy.wang.remindmetodrink.Presenter.CalcPresenter;
 
 
 public class AlertDialogFragment extends DialogFragment implements View {
     String message;
-    CalcPresenter presenter;
+    static CalculateActivity view;
+    WaterModel model;
 
-    static AlertDialogFragment newInstance(String message){
-
+    static AlertDialogFragment newInstance(String message,CalculateActivity cView){
+        view = cView;
         AlertDialogFragment f = new AlertDialogFragment();
-
         Bundle args = new Bundle();
         args.putString("message",message);
         f.setArguments(args);
@@ -29,14 +30,14 @@ public class AlertDialogFragment extends DialogFragment implements View {
     public Dialog onCreateDialog(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         this.message = getArguments().getString("message");
-        this.presenter = new CalcPresenter(this);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Results: " + this.message + " Cups of water per day")
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Confirm water
-                        presenter.saveResult(Double.parseDouble(message));
+                        view.saveAmount(Double.parseDouble(message));
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -49,12 +50,5 @@ public class AlertDialogFragment extends DialogFragment implements View {
     }
 
     public void viewAction(String action,String optional){
-        if(action.matches("goToMain"))
-            goToMain();
-    }
-
-    public void goToMain(){
-        Intent intent = new Intent(getActivity(),MainActivity.class);
-        startActivity(intent);
     }
 }

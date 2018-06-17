@@ -4,10 +4,11 @@ package com.jimmy.wang.remindmetodrink.Model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class WaterModel extends SQLiteOpenHelper{
+public class WaterModel extends SQLiteOpenHelper implements Model{
     // Database Version
     private static final int DATABASE_VERSION = 1;
 
@@ -42,12 +43,18 @@ public class WaterModel extends SQLiteOpenHelper{
             cursor.moveToFirst();
         }
 
-        WaterAmount amount = new WaterAmount(
-                cursor.getInt(cursor.getColumnIndex(WaterAmount.COLUMN_ID)),
-                cursor.getDouble(cursor.getColumnIndex(WaterAmount.COLUMN_AMOUNT)),
-                cursor.getString(cursor.getColumnIndex(WaterAmount.COLUMN_TIMESTAMP)));
+        WaterAmount amount = null;
 
-        cursor.close();
+        try {
+            amount = new WaterAmount(
+                    cursor.getInt(cursor.getColumnIndex(WaterAmount.COLUMN_ID)),
+                    cursor.getDouble(cursor.getColumnIndex(WaterAmount.COLUMN_AMOUNT)),
+                    cursor.getString(cursor.getColumnIndex(WaterAmount.COLUMN_TIMESTAMP)));
+
+        }catch(CursorIndexOutOfBoundsException exception){
+        } finally {
+            cursor.close();
+        }
 
         return amount;
     }
