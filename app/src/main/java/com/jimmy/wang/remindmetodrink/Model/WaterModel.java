@@ -22,12 +22,15 @@ public class WaterModel extends SQLiteOpenHelper implements Model{
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(WaterAmount.CREATE_TABLE);
+        db.execSQL(WaterAmount.UPDATE_TIMESTAMP_TRIGGER);
+        db.execSQL(Alert.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + WaterAmount.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Alert.TABLE_NAME);
 
         // Create tables again
         onCreate(db);
@@ -79,5 +82,52 @@ public class WaterModel extends SQLiteOpenHelper implements Model{
 
         return db.update(WaterAmount.TABLE_NAME,values,WaterAmount.COLUMN_ID + "=?",
                 new String[]{String.valueOf(waterAmount.getId())});
+    }
+
+    public long insertAlert(int alertCount){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Alert.COLUMN_ALERT_COUNT,alertCount);
+
+        long id = db.insert(Alert.TABLE_NAME,null,values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Alert selectAlert(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Alert.TABLE_NAME,new String[]{Alert.COLUMN_ID,Alert.COLUMN_ALERT_COUNT},
+                Alert.COLUMN_ID + "=?", new String[]{String.valueOf(id)},null,null,null,null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        Alert alert = null;
+
+        try {
+            alert = new Alert(
+                    cursor.getInt(cursor.getColumnIndex(Alert.COLUMN_ID)),
+                    cursor.getInt(cursor.getColumnIndex(Alert.COLUMN_ALERT_COUNT)));
+
+        }catch(CursorIndexOutOfBoundsException exception){
+        } finally {
+            cursor.close();
+        }
+
+        return alert;
+    }
+
+    public int updateAlert(Alert alert){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Alert.COLUMN_ALERT_COUNT, alert.getCount());
+
+        return db.update(Alert.TABLE_NAME,values,Alert.COLUMN_ID + "=?",
+                new String[]{String.valueOf(alert.getId())});
     }
 }

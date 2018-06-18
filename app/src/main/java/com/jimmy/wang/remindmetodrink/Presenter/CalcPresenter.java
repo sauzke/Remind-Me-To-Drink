@@ -9,6 +9,7 @@ import android.widget.ToggleButton;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.jimmy.wang.remindmetodrink.Model.Alert;
 import com.jimmy.wang.remindmetodrink.Model.WaterAmount;
 import com.jimmy.wang.remindmetodrink.Model.WaterModel;
 import com.jimmy.wang.remindmetodrink.View.AlertDialogFragment;
@@ -40,7 +41,7 @@ public class CalcPresenter implements Presenter{
                 break;
         }
 
-        result = weight/2.2*multiplier/28.3/8;
+        result = weight/2.2*multiplier/28.3;
 
         return result;
     }
@@ -67,16 +68,24 @@ public class CalcPresenter implements Presenter{
     public void saveResult(Double amount, WaterModel model){
         if(model.selectAmount(1) == null) {
             model.insertAmount(amount);
-            System.out.println("Inserted");
         }
         else{
             WaterAmount wAmount = new WaterAmount(1,amount,"");
             model.updateAmount(wAmount);
-            System.out.println("Updated");
         }
 
-        System.out.println(model.selectAmount(1).getAmount());
+        saveAlertCount(0,model);
 
         view.viewAction("goToMain","");
+    }
+
+    public void saveAlertCount(int count,WaterModel model){
+        if(model.selectAlert(1) == null){
+            model.insertAlert(count);
+        }
+        else{
+            Alert alert = new Alert(1,count);
+            model.updateAlert(alert);
+        }
     }
 }

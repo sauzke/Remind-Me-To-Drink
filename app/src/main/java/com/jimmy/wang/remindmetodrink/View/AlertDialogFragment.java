@@ -33,7 +33,7 @@ public class AlertDialogFragment extends DialogFragment implements View {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Results: " + this.message + " Cups of water per day")
+        builder.setMessage("You should drink " + this.message + "oz of water per day")
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Confirm water
