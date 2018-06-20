@@ -1,5 +1,8 @@
 package com.jimmy.wang.remindmetodrink.Presenter;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 import com.jimmy.wang.remindmetodrink.Model.Alert;
 import com.jimmy.wang.remindmetodrink.Model.WaterAmount;
 import com.jimmy.wang.remindmetodrink.Model.WaterModel;
+import com.jimmy.wang.remindmetodrink.R;
 import com.jimmy.wang.remindmetodrink.View.CalculateActivity;
 import com.jimmy.wang.remindmetodrink.View.View;
 
@@ -97,6 +101,7 @@ public class MainPresenter implements Presenter {
                             model.updateAlert(alert);
 
                             countDownText.setText("Time to Drink");
+                            view.viewAction("notify","Time to Drink!");
                         }
                     }
                 }.start();

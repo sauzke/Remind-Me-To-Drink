@@ -1,5 +1,8 @@
 package com.jimmy.wang.remindmetodrink.View;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,5 +41,18 @@ public class MainActivity extends AppCompatActivity implements View{
         startActivity(intent);
     }
 
-    public void viewAction(String action,String optional){}
+    public void viewAction(String action,String optional){
+        if(action.matches("notify"))
+            notify(optional);
+    }
+
+    public void notify(String message){
+        NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notify=new Notification.Builder
+                (getApplicationContext()).setContentTitle("RMTD").setContentText(message).
+                setContentTitle("Remind me to Drink").setSmallIcon(R.drawable.ic_launcher_foreground).build();
+
+        notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        notif.notify(0, notify);
+    }
 }
