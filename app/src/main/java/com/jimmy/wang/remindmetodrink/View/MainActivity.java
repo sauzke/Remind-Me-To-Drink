@@ -38,10 +38,5 @@ public class MainActivity extends AppCompatActivity implements View{
         startActivity(intent);
     }
 
-    public void settingClick(android.view.View view){
-        Intent intent = new Intent(this,SettingsActivity.class);
-        startActivity(intent);
-    }
-
     public void viewAction(String action,String optional){}
 }
