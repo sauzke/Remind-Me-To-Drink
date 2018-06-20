@@ -59,7 +59,7 @@ public class MainPresenter implements Presenter {
                 if(remainingPercentage < 0)
                     remainingPercentage = 0;
 
-                result = remaingingWater + "/" + amount.getAmount() + " oz remaining, " + (int) remainingPercentage*100 + "%";
+                result = String.format("%.2f",remaingingWater) + "/" + amount.getAmount() + " oz remaining, " + (int) (remainingPercentage*100) + "%";
             }
             catch(ParseException e){
                 System.out.println("Date Parse Exception");
