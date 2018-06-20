@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View{
         Intent intent = new Intent(this,CalculateActivity.class);
         startActivity(intent);
     }
-    
 
     public void viewAction(String action,String optional){}
 }
