@@ -13,6 +13,14 @@ public class WaterAmount {
             + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
             + ")";
 
+    public static final String UPDATE_TIMESTAMP_TRIGGER = "CREATE TRIGGER update_time_trigger " +
+            "AFTER UPDATE ON " + TABLE_NAME + " FOR EACH ROW " +
+            "BEGIN " +
+                "UPDATE " + TABLE_NAME +
+                " SET " + COLUMN_TIMESTAMP + " = CURRENT_TIMESTAMP " +
+                "WHERE " + COLUMN_ID + " = old."+ COLUMN_ID + "; " +
+            "END";
+
     private int id;
     private double amount;
     private String timestamp;

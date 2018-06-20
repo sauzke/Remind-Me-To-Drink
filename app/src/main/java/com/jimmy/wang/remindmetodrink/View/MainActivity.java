@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jimmy.wang.remindmetodrink.Model.WaterModel;
 import com.jimmy.wang.remindmetodrink.Presenter.MainPresenter;
 import com.jimmy.wang.remindmetodrink.R;
 
 public class MainActivity extends AppCompatActivity implements View{
     private MainPresenter presenter;
+    private WaterModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +23,14 @@ public class MainActivity extends AppCompatActivity implements View{
         TextView percentage = findViewById(R.id.waterPercentage);
         TextView timer = findViewById(R.id.waterTimer);
         calButton.setText("Calculate");
-        percentage.setText("Press Calulate to begin");
         timer.setText("");
 
         presenter = new MainPresenter(this);
+        model = new WaterModel(this);
+
+        percentage.setText(presenter.getValue(model));
+        presenter.startCountDown(timer,model);
+
     }
 
     public void calcClick(android.view.View view){
