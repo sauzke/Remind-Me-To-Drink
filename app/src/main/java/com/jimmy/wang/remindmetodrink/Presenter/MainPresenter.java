@@ -29,6 +29,7 @@ public class MainPresenter implements Presenter {
 
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     int totalDrinkingHours = 12;
+    CountDownTimer timer;
 
     public MainPresenter(final View view){
         this.view = view;
@@ -69,7 +70,7 @@ public class MainPresenter implements Presenter {
         return result;
     }
 
-    public void startCountDown(final TextView countDownText,final WaterModel model){
+    public void startCountDown(final TextView countDownText,final TextView percentage,final WaterModel model){
         if(model.selectAlert(1) != null){
             WaterAmount amount = model.selectAmount(1);
             Alert alert = model.selectAlert(1);
@@ -84,7 +85,7 @@ public class MainPresenter implements Presenter {
 
                 System.out.println(timeToNext);
 
-                new CountDownTimer(timeToNext, 1000) {
+                timer = new CountDownTimer(timeToNext, 1000) {
                     public void onTick(long millisUntilFinished) {
                         String time = String.format("%02d:%02d:%02d",
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
@@ -93,6 +94,7 @@ public class MainPresenter implements Presenter {
                                 TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
                                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                         countDownText.setText("Next Alert: " + time);
+                        percentage.setText(getValue(model));
                     }
 
                     public void onFinish() {
@@ -100,14 +102,21 @@ public class MainPresenter implements Presenter {
                             Alert alert = new Alert(1,model.selectAlert(1).getCount() + 1);
                             model.updateAlert(alert);
 
-                            countDownText.setText("Time to Drink");
+                            //countDownText.setText("Time to Drink");
                             view.viewAction("notify","Time to Drink!");
+                            view.viewAction("reload","");
                         }
                     }
                 }.start();
             }
             catch(ParseException e){
             }
+        }
+    }
+
+    public void killTimer(){
+        if(timer != null){
+            timer.cancel();
         }
     }
 }
