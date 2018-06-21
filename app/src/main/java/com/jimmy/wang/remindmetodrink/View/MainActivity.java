@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View{
         setContentView(R.layout.activity_main);
 
         Button calButton = findViewById(R.id.calculateButton);
-        TextView percentage = findViewById(R.id.waterPercentage);
+        //TextView percentage = findViewById(R.id.waterPercentage);
         TextView timer = findViewById(R.id.waterTimer);
         calButton.setText("Calculate");
         timer.setText("");
@@ -31,9 +31,25 @@ public class MainActivity extends AppCompatActivity implements View{
         presenter = new MainPresenter(this);
         model = new WaterModel(this);
 
-        percentage.setText(presenter.getValue(model));
-        presenter.startCountDown(timer,model);
+//        percentage.setText(presenter.getValue(model));
+//        presenter.startCountDown(timer,model);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        TextView percentage = findViewById(R.id.waterPercentage);
+        TextView timer = findViewById(R.id.waterTimer);
+        //percentage.setText(presenter.getValue(model));
+        presenter.startCountDown(timer,percentage,model);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        presenter.killTimer();
     }
 
     public void calcClick(android.view.View view){
@@ -44,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements View{
     public void viewAction(String action,String optional){
         if(action.matches("notify"))
             notify(optional);
+        if(action.matches("reload")) {
+            TextView timer = findViewById(R.id.waterTimer);
+            TextView percentage = findViewById(R.id.waterPercentage);
+            presenter.startCountDown(timer,percentage,model);
+        }
     }
 
     public void notify(String message){
@@ -54,5 +75,10 @@ public class MainActivity extends AppCompatActivity implements View{
 
         notify.flags |= Notification.FLAG_AUTO_CANCEL;
         notif.notify(0, notify);
+    }
+
+    public void reload(){
+        finish();
+        startActivity(getIntent());
     }
 }
